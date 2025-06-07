@@ -77,7 +77,7 @@ void sprite::load_animated_sprite(int size)
 	maxframe=size;
 	for (int n=0; n<size; n++)
 	{
-		sprintf_s(s,"Alien%d.bmp",n);
+		sprintf_s(s,"frame_%d_delay-0.04s.png",n+1);
 		image[n] = al_load_bitmap(s);
 
 		al_convert_mask_to_alpha(image[n], al_map_rgb(255, 255, 255));
@@ -85,7 +85,7 @@ void sprite::load_animated_sprite(int size)
 	width=al_get_bitmap_width(image[0]);
 	height=al_get_bitmap_height(image[0]);
 	curframe = 0;
-	framedelay = 5;
+	framedelay = 4;
 	framecount = 0;
 
 
