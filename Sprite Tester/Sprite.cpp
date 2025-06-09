@@ -105,8 +105,11 @@ void sprite::load_animated_sprite(int size)
 	framecount = 0;
 	angle = 0;
 	r = 255, g = 255, b = 255;
-	specialityPower[0] = false;
-	specialityPower[1] = true;
+	for (int i = 0; i < 4; i++) {
+		specialityPower[i] = false;
+	}
+	int sp = rand() % 2;
+	specialityPower[sp] = true;
 	CollisionIsTrue = false;
 }
 
