@@ -20,6 +20,19 @@ void sprite::drawSprite()
 		}
 		al_draw_tinted_bitmap(image[curframe], al_map_rgb(r, g, b), x, y, 0);
 	}
+	else if (specialityPower[2] && CollisionIsTrue) {
+		if (!paused) {
+			paused = true;
+			pauseTime = al_get_time();
+		}
+		else if (paused) {
+			endTime = al_get_time();
+			if ((endTime - pauseTime) >= 5.0) {
+				paused = false;
+				al_draw_bitmap(image[curframe], x, y, 0);
+			}
+		}
+	}
 	else {
 		al_draw_bitmap(image[curframe], x, y, 0);
 	}
@@ -30,26 +43,28 @@ void sprite::drawSprite()
 void sprite::updatesprite()
 {
 	//update x position
-	if (++xcount > xdelay)
-	{
-		xcount = 0;
-		x += xspeed;
-	}
+	if (!paused) {
+		if (++xcount > xdelay)
+		{
+			xcount = 0;
+			x += xspeed;
+		}
 
-	//update y position
-	if (++ycount > ydelay)
-	{
-		ycount = 0;
-		y += yspeed;
-	}
+		//update y position
+		if (++ycount > ydelay)
+		{
+			ycount = 0;
+			y += yspeed;
+		}
 
 
-	if (framecount++ > framedelay)
-	{
-		framecount = 0;
-		curframe++;
-		if (curframe >= maxframe)
-			curframe = 0;
+		if (framecount++ > framedelay)
+		{
+			framecount = 0;
+			curframe++;
+			if (curframe >= maxframe)
+				curframe = 0;
+		}
 	}
 }
 
@@ -104,11 +119,12 @@ void sprite::load_animated_sprite(int size)
 	framedelay = 4;
 	framecount = 0;
 	angle = 0;
+	paused = false;
 	r = 255, g = 255, b = 255;
 	for (int i = 0; i < 4; i++) {
 		specialityPower[i] = false;
 	}
-	int sp = rand() % 2;
+	int sp = rand() % 3;
 	specialityPower[sp] = true;
 	CollisionIsTrue = false;
 }

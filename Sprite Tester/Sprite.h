@@ -13,6 +13,9 @@ public:
 private:
 	int x,y;
 	float angle;
+	float pauseTime;
+	float endTime;
+	bool paused;
 	int r, g, b;
 	int width,height;
 	int xspeed,yspeed;
