@@ -8,8 +8,15 @@ using namespace std;
 
 void sprite::drawSprite()
 {
-	al_draw_bitmap(image[curframe], x, y, 0);
-
+	if (specialityPower[0]) {
+		al_draw_rotated_bitmap(image[curframe], width / 2, height / 2, x, y, angle, 0);
+		angle += .1;
+	}
+	else {
+		al_draw_bitmap(image[curframe], x, y, 0);
+	}
+	
+	CollisionIsTrue = false;
 }
 
 void sprite::updatesprite()
@@ -88,8 +95,8 @@ void sprite::load_animated_sprite(int size)
 	curframe = 0;
 	framedelay = 4;
 	framecount = 0;
-
-
+	angle = 0;
+	specialityPower[0] = true;
 }
 
 void sprite::collision(sprite sp[], int csize, int current, int WIDTH, int HEIGHT)
@@ -101,6 +108,7 @@ void sprite::collision(sprite sp[], int csize, int current, int WIDTH, int HEIGH
 				if (y >= sp[i].getY()-height && y <= sp[i].getY()+height) {
 					x = rand() % WIDTH;
 					y = rand() % HEIGHT;
+					CollisionIsTrue = true;
 				}
 			}
 	}

@@ -12,6 +12,7 @@ public:
 
 private:
 	int x,y;
+	float angle;
 	int width,height;
 	int xspeed,yspeed;
 	int xdelay,ydelay;
@@ -19,5 +20,6 @@ private:
 	int curframe,maxframe,animdir;
 	int framecount,framedelay;
 	bool CollisionIsTrue;
+	bool specialityPower[4];	//0=Spining, 1= Scared, 2=Baby, 3=Freeze
 	ALLEGRO_BITMAP *image[9];
 };
