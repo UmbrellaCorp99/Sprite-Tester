@@ -41,6 +41,7 @@ int main(void)
 	al_register_event_source(event_queue, al_get_timer_event_source(timer));
 	al_set_target_bitmap(al_get_backbuffer(display));
 	al_start_timer(timer);
+	srand(time(NULL));
 
 	for (int i = 0; i < NUMalien; i++) {
 		alien[i].load_animated_sprite(9);
@@ -56,6 +57,9 @@ int main(void)
 		{
 			for (int i = 0; i < NUMalien; i++) {
 				alien[i].bouncesprite(width, height);
+			}
+			for (int i = 0; i < NUMalien; i++) {
+				alien[i].collision(alien, NUMalien, i, width, height);
 			}
 			
 			redraw = true;

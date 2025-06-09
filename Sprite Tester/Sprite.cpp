@@ -8,7 +8,8 @@ using namespace std;
 
 void sprite::drawSprite()
 {
-	al_draw_bitmap(image[curframe],x,y,0);
+	al_draw_bitmap(image[curframe], x, y, 0);
+
 }
 
 void sprite::updatesprite()
@@ -89,6 +90,20 @@ void sprite::load_animated_sprite(int size)
 	framecount = 0;
 
 
+}
+
+void sprite::collision(sprite sp[], int csize, int current, int WIDTH, int HEIGHT)
+{
+	for (int i = 0; i < csize; i++)
+	{
+		if (i != current)
+			if (x > sp[i].getX()-width && x <= sp[i].getX()+width) {
+				if (y >= sp[i].getY()-height && y <= sp[i].getY()+height) {
+					x = rand() % WIDTH;
+					y = rand() % HEIGHT;
+				}
+			}
+	}
 }
 
 sprite::~sprite()

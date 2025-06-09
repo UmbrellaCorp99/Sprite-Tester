@@ -8,7 +8,7 @@ public:
 	void drawSprite();
 	int getX(){return x;}
 	int getY(){return y;}
-
+	void collision(sprite sp[], int csize, int current, int width, int height);
 
 private:
 	int x,y;
@@ -19,6 +19,5 @@ private:
 	int curframe,maxframe,animdir;
 	int framecount,framedelay;
 	bool CollisionIsTrue;
-	bool specialityPower[4]; //0=Spining, 1= Scared, 2=Baby, 3=Freeze
 	ALLEGRO_BITMAP *image[9];
 };
