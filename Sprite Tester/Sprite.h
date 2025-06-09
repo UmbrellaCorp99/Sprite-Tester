@@ -13,6 +13,7 @@ public:
 private:
 	int x,y;
 	float angle;
+	int r, g, b;
 	int width,height;
 	int xspeed,yspeed;
 	int xdelay,ydelay;

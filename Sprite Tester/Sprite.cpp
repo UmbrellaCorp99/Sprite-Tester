@@ -12,6 +12,14 @@ void sprite::drawSprite()
 		al_draw_rotated_bitmap(image[curframe], width / 2, height / 2, x, y, angle, 0);
 		angle += .1;
 	}
+	else if (specialityPower[1]) {
+		if (CollisionIsTrue) {
+			r = rand() % 255;
+			g = rand() % 255;
+			b = rand() % 255;;
+		}
+		al_draw_tinted_bitmap(image[curframe], al_map_rgb(r, g, b), x, y, 0);
+	}
 	else {
 		al_draw_bitmap(image[curframe], x, y, 0);
 	}
@@ -96,7 +104,10 @@ void sprite::load_animated_sprite(int size)
 	framedelay = 4;
 	framecount = 0;
 	angle = 0;
-	specialityPower[0] = true;
+	r = 255, g = 255, b = 255;
+	specialityPower[0] = false;
+	specialityPower[1] = true;
+	CollisionIsTrue = false;
 }
 
 void sprite::collision(sprite sp[], int csize, int current, int WIDTH, int HEIGHT)
