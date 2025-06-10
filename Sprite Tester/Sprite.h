@@ -1,3 +1,6 @@
+//Alexander Young
+//Lab 10
+
 class sprite
 {
 public: 

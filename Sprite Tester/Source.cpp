@@ -1,3 +1,6 @@
+//Alexander Young
+//Lab 10
+
 #include <allegro5\allegro.h>
 #include <allegro5\allegro_image.h>
 #include <allegro5/allegro_font.h>
@@ -61,9 +64,11 @@ int main(void)
 
 		if(ev.type == ALLEGRO_EVENT_TIMER)
 		{
+			//check for screen collision for every sprite
 			for (int i = 0; i < NUMalien; i++) {
 				alien[i].bouncesprite(width, height);
 			}
+			//check for collision with other sprites for every sprite
 			for (int i = 0; i < NUMalien; i++) {
 				alien[i].collision(alien, NUMalien, i, width, height);
 			}
@@ -99,12 +104,15 @@ int main(void)
 
 
 			redraw = false; 
+			//update every sprite's location
 			for (int i = 0; i < NUMalien; i++) {
 				alien[i].updatesprite();
 			}
+			//draw every sprite in the new location
 			for (int i = 0; i < NUMalien; i++) {
 				alien[i].drawSprite();
 			}
+			//if a sprite's dimensions are less than 1 (it disappeared) than print a message
 			for (int i = 0; i < NUMalien; i++) {
 				if (alien[i].getWidth() < 1 || alien[i].getHeight() < 1) {
 					al_draw_text(font, al_map_rgb(255, 255, 0), width/2, height/2, 0, "A sprite has died");

@@ -1,3 +1,6 @@
+//Alexander Young
+//Lab 10
+
 #include <allegro5\allegro.h>
 #include <allegro5\allegro_image.h>
 #include <stdio.h>
@@ -6,6 +9,11 @@
 #include <iostream>
 using namespace std;
 
+//This function draws a sprite to the display. A sprite can either rotate around its center, 
+// scale in half upon every collision with another sprite, change colors upon collision with another sprite,
+// or freeze for 5 seconds upon collision with another sprite
+//Takes no parameters
+//No return
 void sprite::drawSprite()
 {
 	if (specialityPower[0]) {
@@ -64,6 +72,9 @@ void sprite::drawSprite()
 	CollisionIsTrue = false;
 }
 
+//This function updates a sprite's x and y location
+//Takes no parameters
+//No return
 void sprite::updatesprite()
 {
 	//update x position
@@ -92,6 +103,9 @@ void sprite::updatesprite()
 	}
 }
 
+//This function changes a sprites direction upon colliding with a display boundary
+//Takes two integers representing a display width and height as parameters
+//No return
 void sprite::bouncesprite(int SCREEN_W, int SCREEN_H)
 {
 	//simple screen bouncing behavior
@@ -125,6 +139,9 @@ void sprite::bouncesprite(int SCREEN_W, int SCREEN_H)
 
 }
 
+//This function loads all the images of a split gif into a bitmap and randomly assigns it a special power (rotating, scaling, changing color, freezing)
+//Takes an integer representing the number of images of the gif to use
+//No return
 void sprite::load_animated_sprite(int size)
 {
 	//load the animated sprite
@@ -156,6 +173,10 @@ void sprite::load_animated_sprite(int size)
 	CollisionIsTrue = false;
 }
 
+//This function detects if a collision occurs between sprites
+//Takes an array of sprites, an integer representing the number of sprites, an integer representing the index of the sprite being checked,
+//and two integers representing the display width and height
+//No return
 void sprite::collision(sprite sp[], int csize, int current, int WIDTH, int HEIGHT)
 {
 	for (int i = 0; i < csize; i++)
@@ -171,6 +192,9 @@ void sprite::collision(sprite sp[], int csize, int current, int WIDTH, int HEIGH
 	}
 }
 
+//This is a deconstructor for the sprite class that destroys every sprite object
+//Takes no parameter
+//No return
 sprite::~sprite()
 {
 	for(int i = 0; i < maxframe; i++)
