@@ -20,23 +20,47 @@ void sprite::drawSprite()
 		}
 		al_draw_tinted_bitmap(image[curframe], al_map_rgb(r, g, b), x, y, 0);
 	}
-	else if (specialityPower[2] && CollisionIsTrue) {
+	else if (specialityPower[2]) {
+		if (CollisionIsTrue) {
+			if (!scaled) {
+				scaled = true;
+				startTime = al_get_time();
+				al_draw_scaled_bitmap(image[curframe], 0, 0, al_get_bitmap_width(image[0]), al_get_bitmap_height(image[0]), x, y, width / 2, height / 2, 0);
+				width = width / 2;
+				height = height / 2;
+			}
+			else {
+				endTime = al_get_time();
+				if (endTime - startTime >= 10) {
+					scaled = false;
+					al_draw_scaled_bitmap(image[curframe], 0, 0, al_get_bitmap_width(image[0]), al_get_bitmap_height(image[0]), x, y, originalWidth, originalHeight, 0);
+					width = originalWidth;
+					height = originalHeight;
+				}
+				else {
+					al_draw_scaled_bitmap(image[curframe], 0, 0, al_get_bitmap_width(image[0]), al_get_bitmap_height(image[0]), x, y, width / 2, height / 2, 0);
+					width = width / 2;
+					height = height / 2;
+				}
+			}
+		}
+		else {
+			al_draw_scaled_bitmap(image[curframe], 0, 0, al_get_bitmap_width(image[0]), al_get_bitmap_height(image[0]), x, y, width, height, 0);
+		}
+	}
+	else if (specialityPower[3] && CollisionIsTrue) {
 		if (!paused) {
 			paused = true;
-			pauseTime = al_get_time();
+			startTime = al_get_time();
 		}
 		else if (paused) {
 			endTime = al_get_time();
-			if ((endTime - pauseTime) >= 5.0) {
+			if ((endTime - startTime) >= 5.0) {
 				paused = false;
 				al_draw_bitmap(image[curframe], x, y, 0);
 			}
 		}
 	}
-	else {
-		al_draw_bitmap(image[curframe], x, y, 0);
-	}
-	
 	CollisionIsTrue = false;
 }
 
@@ -113,6 +137,8 @@ void sprite::load_animated_sprite(int size)
 
 		al_convert_mask_to_alpha(image[n], al_map_rgb(255, 255, 255));
 	}  
+	originalWidth = al_get_bitmap_width(image[0]);
+	originalHeight = al_get_bitmap_height(image[0]);
 	width=al_get_bitmap_width(image[0]);
 	height=al_get_bitmap_height(image[0]);
 	curframe = 0;
@@ -120,11 +146,12 @@ void sprite::load_animated_sprite(int size)
 	framecount = 0;
 	angle = 0;
 	paused = false;
+	scaled = false;
 	r = 255, g = 255, b = 255;
 	for (int i = 0; i < 4; i++) {
 		specialityPower[i] = false;
 	}
-	int sp = rand() % 3;
+	int sp = rand() % 4;
 	specialityPower[sp] = true;
 	CollisionIsTrue = false;
 }

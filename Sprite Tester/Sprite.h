@@ -8,16 +8,20 @@ public:
 	void drawSprite();
 	int getX(){return x;}
 	int getY(){return y;}
+	int getWidth() { return width; }
+	int getHeight() { return height; }
 	void collision(sprite sp[], int csize, int current, int width, int height);
 
 private:
 	int x,y;
 	float angle;
-	float pauseTime;
+	float startTime;
 	float endTime;
 	bool paused;
+	bool scaled;
 	int r, g, b;
 	int width,height;
+	int originalWidth, originalHeight;
 	int xspeed,yspeed;
 	int xdelay,ydelay;
 	int xcount,ycount;

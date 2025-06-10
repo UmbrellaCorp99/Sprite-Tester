@@ -1,5 +1,7 @@
 #include <allegro5\allegro.h>
 #include <allegro5\allegro_image.h>
+#include <allegro5/allegro_font.h>
+#include <allegro5/allegro_ttf.h>
 #include "Sprite.h"
 #include <iostream>
 using namespace std;
@@ -20,7 +22,7 @@ int main(void)
 	ALLEGRO_EVENT_QUEUE *event_queue = NULL;
 	sprite alien[NUMalien];
 	ALLEGRO_TIMER *timer = NULL;
-
+	ALLEGRO_FONT* font = NULL;
 
 	//program init
 	if(!al_init())										//initialize Allegro
@@ -34,6 +36,8 @@ int main(void)
 	//addon init
 	al_install_keyboard();
 	al_init_image_addon();
+	al_init_font_addon();
+	al_init_ttf_addon();
 	timer = al_create_timer(1.0 / FPS);
 
 	event_queue = al_create_event_queue();
@@ -42,6 +46,8 @@ int main(void)
 	al_set_target_bitmap(al_get_backbuffer(display));
 	al_start_timer(timer);
 	srand(time(NULL));
+
+	font = al_load_font("Movistar Text Regular.ttf", 24, 0);
 
 	for (int i = 0; i < NUMalien; i++) {
 		alien[i].load_animated_sprite(9);
@@ -99,6 +105,11 @@ int main(void)
 			for (int i = 0; i < NUMalien; i++) {
 				alien[i].drawSprite();
 			}
+			for (int i = 0; i < NUMalien; i++) {
+				if (alien[i].getWidth() < 1 || alien[i].getHeight() < 1) {
+					al_draw_text(font, al_map_rgb(255, 255, 0), width/2, height/2, 0, "A sprite has died");
+				}
+			}
 			
 			al_flip_display();
 			al_clear_to_color(al_map_rgb(0,0,0));
@@ -106,7 +117,8 @@ int main(void)
 	}
 	al_destroy_timer(timer);
 	al_destroy_event_queue(event_queue);
-	al_destroy_display(display);						//destroy our display object
+	al_destroy_display(display);
+	al_destroy_font(font);
 
 	return 0;
 }
